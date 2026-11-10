@@ -1,33 +1,51 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="or">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LAXMINARAYAN Pesticide Shop</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body{font-family:Arial;background:#f3f6f4;margin:0;color:#222}
-header{background:#176b3a;color:white;padding:22px}
-main{padding:20px}
-.card{background:white;padding:20px;border-radius:12px;margin:15px 0}
-h1{font-size:22px}
-button{background:#176b3a;color:white;border:0;padding:12px 18px;border-radius:7px}
+body{font-family:Arial;margin:0;background:#f1f5f2;color:#222}
+header{background:#176b3a;color:white;padding:20px}
+main{padding:16px}
+.card{background:white;padding:18px;margin:12px 0;border-radius:12px}
+input,button{padding:12px;margin:5px 0;width:100%;box-sizing:border-box}
+button{background:#176b3a;color:white;border:0;border-radius:7px}
 </style>
 </head>
 <body>
 <header>
-<h1>LAXMINARAYAN Pesticide Shop</h1>
+<h2>LAXMINARAYAN Pesticide Shop</h2>
 <p>Shop Management Software</p>
 </header>
 <main>
 <div class="card">
-<h2>Welcome!</h2>
-<p>ଆପଣଙ୍କ ଦୋକାନର Software ପ୍ରସ୍ତୁତ ହେଉଛି।</p>
+<h3>Welcome!</h3>
+<p>ଦୋକାନ ପରିଚାଳନା ସଫ୍ଟୱେର</p>
+<p id="status">Database connection setup pending.</p>
 </div>
 <div class="card">
-<h3>Dashboard</h3>
-<p>Products | Customers | Billing | Sales History</p>
+<h3>Login</h3>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="message"></p>
 </div>
 </main>
+<script>
+const SUPABASE_URL = "YOUR_PROJECT_URL";
+const SUPABASE_KEY = "YOUR_PUBLISHABLE_KEY";
+const db = supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+async function login(){
+ const email=document.getElementById("email").value;
+ const password=document.getElementById("password").value;
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ document.getElementById("message").textContent=
+ error ? error.message : "Login successful!";
+}
+</script>
 </body>
 </html>
